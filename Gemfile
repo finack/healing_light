@@ -4,4 +4,5 @@ gemspec
 
 group :development do
   gem 'rspec'
+  gem 'pry'
 end
