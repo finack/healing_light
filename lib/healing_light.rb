@@ -1,4 +1,6 @@
-require "healing_light/control/basic"
+require "healing_light/control/base"
+require "healing_light/control/all"
+require "healing_light/control/chase"
 
 require "healing_light/led/base"
 require "healing_light/led/seven_bit"

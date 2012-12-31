@@ -20,10 +20,11 @@ flag [:s,:strip], default_value: 'LPD8806'
 flag [:c,:count], default_value: 32
 flag [:d,:dev], default_value: '/dev/spidev0.0'
 
+desc "Do something to all lights at once"
 command :all do |c|
   pre do |globals,command,opts,args|
     $strip = strip globals
-    $strip.extend Control::Basic
+    $strip.extend HealingLight::Control::All
   end
   c.command :on do |on|
     on.action { $strip.all_on(255,255,255) }

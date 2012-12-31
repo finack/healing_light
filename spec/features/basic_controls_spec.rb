@@ -8,7 +8,7 @@ describe "As a LPD8806 user" do
   let(:white) { [255,255,255] }
 
   before :each do
-    strip.extend Control::Basic
+    strip.extend HealingLight::Control::All
   end
 
   context "all leds shoud turn on" do

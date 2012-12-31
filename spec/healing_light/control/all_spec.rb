@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Control::Basic do
+describe HealingLight::Control::All do
   context "#all_on" do
-    subject { strip.extend Control::Basic }
+    subject { strip.extend HealingLight::Control::All }
     let(:strip) { Strip::Base.new(1) }
 
     before :each do
