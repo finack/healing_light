@@ -1,6 +1,7 @@
 # HealingLight
 
 [![Build Status](https://travis-ci.org/finack/healing_light.png?branch=master)](https://travis-ci.org/finack/healing_light)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/finack/healing_light)
 [![Code Coverage](https://coveralls.io/repos/finack/healing_light/badge.png?branch=master)](https://coveralls.io/r/finack/healing_light)
 
 Control LED Lights on the RasperryPi (or other linux like systems) from Ruby
