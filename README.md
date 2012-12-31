@@ -1,24 +1,34 @@
 # HealingLight
 
-TODO: Write a gem description
+[![Build Status](https://travis-ci.org/finack/healing_light.png?branch=master)](https://travis-ci.org/finack/healing_light)
 
-## Installation
+Control LED Lights on the RasperryPi (or other linux like systems) from Ruby
 
-Add this line to your application's Gemfile:
+## Setup
 
-    gem 'healing_light'
+### LPD8806
 
-And then execute:
+The [LPD8806 Digital RGB Strip](http://www.adafruit.com/products/307) from
+Adafruit is controlled via the SPIDEV user space linux module on the
+[Adafruit Raspberry Pi Linux Distro](http://learn.adafruit.com/adafruit-raspberry-pi-educational-linux-distro/overview).
 
-    $ bundle
+**Quick Usage**
 
-Or install it yourself as:
+Fire up your Raspberry PI, SSH/Console into it, and assuming you have Ruby 1.9
 
-    $ gem install healing_light
+```sh
+mkdir ~/healing_light
+cd ~/healing_light
+gem install bundler
+bundle init
+echo "gem 'healing_light', git: 'http://www.github.com:/finack/healing_light.git'" >> Gemfile
+bundle update
 
-## Usage
+sudo chmod a+rw /dev/spidev0.0
 
-TODO: Write usage instructions here
+bundle exec healing_light all on
+bundle exec healing_light all off
+```
 
 ## Contributing
 

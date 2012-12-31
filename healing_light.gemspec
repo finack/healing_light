@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = HealingLight::VERSION
   gem.authors       = ["Peter Baker"]
   gem.email         = ["peter@finack.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Control LED Lights}
+  gem.summary       = %q{Very basic LED light controls for RasperryPI}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
