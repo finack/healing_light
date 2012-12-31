@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+# resolve bin path, ignoring symlinks
+require "pathname"
+bin_file = Pathname.new(__FILE__).realpath
+
+# add self to libpath
+$:.unshift File.expand_path("../../lib", bin_file)
+
+require 'healing_light'
+require 'healing_light/cli'
+require 'gli'
+
+include GLI::App
+include HealingLight::CLI
+
+program_desc 'Come bathe in the healing light!'
+
+flag [:s,:strip], default_value: 'LPD8806'
+flag [:c,:count], default_value: 32
+flag [:d,:dev], default_value: '/dev/spidev0.0'
+
+command :all do |c|
+  pre do |globals,command,opts,args|
+    $strip = strip globals
+    $strip.extend Control::Basic
+  end
+  c.command :on do |on|
+    on.action { $strip.all_on(255,255,255) }
+  end
+  c.command :off do |off|
+    off.action { $strip.all_off }
+  end
+end
+
+exit run(ARGV)
+
+# vim ft=ruby
