@@ -34,7 +34,7 @@ class Strip
     end
 
     def write(leds)
-      IO.write @dev, leds.pack('C*')
+      IO.write @dev, leds.pack('C*'), mode: 'a'
     end
 
   end

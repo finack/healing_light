@@ -13,14 +13,29 @@ describe HealingLight::Control::Chase do
       it "Should paint LEDs that are on the strip"
     end
 
-    context "#trailer should write to three LEDS" do
+    context "#chase_dot" do
+      it "Should chase the light down the strip" do
+        strip.should_receive(:paint).exactly(33).times
+        strip.chase_dot(255,255,255,:delay => 0)
+      end
+    end
+
+    context "#chase_trailer" do
+      it "Should chase the light down the strip" do
+        strip.should_receive(:paint_trailer).exactly(36).times
+        strip.chase_trailer(255,255,255,:delay => 0)
+      end
+    end
+
+    context "#paint_trailer should write to three LEDS" do
       let(:white) { [255,255,255] }
       let(:black) { [0,0,0] }
       let(:led) { 10 }
       let(:range) { [10,9,8,7] }
 
-      before :each do
-        # strip.should_receive(:paint).exactly(4).times
+      it "and should paint four leds" do
+        strip.should_receive(:paint).exactly(4).times
+        strip.paint_trailer(*white,range)
       end
 
       it "and should paint the primary LED" do
@@ -63,24 +78,33 @@ describe HealingLight::Control::Chase do
     end
   end # Chase Painter
 
-  context "#chase" do
+  describe "#range" do
+    subject { strip.extend HealingLight::Control::Chase; strip.range(5,size,dir) }
     let(:strip) { Strip::Base.new(32) }
-    before :each do
-      strip.extend HealingLight::Control::Chase
-      strip.stub(:publish)
-    end
-  end
+    let(:size) { 4 }
 
-  context "#range" do
-    subject { strip.extend HealingLight::Control::Chase; strip.range(5,3,dir) }
-    let(:strip) { Strip::Base.new(32) }
-    context "xx" do
+    context "should provide array going from right to left starting on left" do
       let(:dir) { :behind }
       it { should eq [5,4,3,2] }
     end
-    context "xx" do
+
+    context "should provide array going from left to right starting on right" do
       let(:dir) { :ahead }
       it { should eq [27,28,29,30] }
     end
+
+    context "should return a single number left hand side" do
+      let(:dir) { :behind }
+      let(:size) { 1 }
+
+      it { should eq [5] }
+    end
+    context "should return a single number right hand side" do
+      let(:dir) { :ahead }
+      let(:size) { 1 }
+
+      it { should eq [27] }
+    end
+
   end
 end

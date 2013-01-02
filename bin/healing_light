@@ -16,40 +16,52 @@ include HealingLight::CLI
 
 program_desc 'Come bathe in the healing light!'
 
-flag [:s,:strip], default_value: 'LPD8806'
-flag [:c,:count], default_value: 32
-flag [:d,:dev], default_value: '/dev/spidev0.0'
+flag [:strip], default_value: 'LPD8806'
+flag [:count], default_value: 32
+flag [:dev], default_value: '/dev/spidev0.0'
+flag [:c,:color], default_value: 'ffffff', must_match: /[0-9A-Fa-f]{2}{3}/
+
+pre do |globals,command,opts,args|
+  $strip = strip globals
+  $color = rgb_hex_to_a(globals[:color])
+end
 
 desc "Do something to all lights at once"
 command :all do |c|
-  pre do |globals,command,opts,args|
-    $strip = strip globals
-    $strip.extend HealingLight::Control::All
+
+  c.command :on do |sc|
+    sc.action do |globals,opts,args|
+      $strip.extend HealingLight::Control::All
+      $strip.all_on($color)
+    end
   end
-  c.command :on do |on|
-    on.action { $strip.all_on(255,255,255) }
-  end
-  c.command :off do |off|
-    off.action { $strip.all_off }
+
+  c.command :off do |sc|
+    sc.action do |globals,opts,args|
+      $strip.all_off
+    end
   end
 end
 
 desc "Chase a light down the strip"
 command :chase do |c|
-  pre do |globals,command,opts,args|
-    $strip = strip globals
-    $strip.extend HealingLight::Control::Chase
+
+  c.desc 'Which direction should that chase start?'
+  c.flag [:d,:direction],
+    default_value: 'up_down',
+    must_match: %W{up down up_down}
+
+  c.command :trails do |sc|
+    sc.action do |globals,opts,args|
+      $strip.extend HealingLight::Control::Chase
+      chase('trailer',*$color,opts)
+    end
   end
-  c.command :up do |up|
-    up.action { $strip.chase_trailer(255,255,255,dir: :behind) }
-  end
-  c.command :down do |down|
-    down.action { $strip.chase_trailer(255,255,255,dir: :ahead) }
-  end
-  c.command :up_down do |x|
-    x.action do
-      $strip.chase_trailer(128,0,0, dir: :behind)
-      $strip.chase_trailer(0,128,0, dir: :ahead)
+
+  c.command :dot do |sc|
+    sc.action do |globals,opts,args|
+      $strip.extend HealingLight::Control::Chase
+      chase('dot',*$color,opts)
     end
   end
 end
