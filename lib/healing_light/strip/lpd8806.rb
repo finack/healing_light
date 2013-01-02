@@ -3,15 +3,7 @@ class Strip
 
     def initialize(count, dev)
       super count
-      # @count = count
       @dev = dev
-      # @type = Strip::LPD8806
-      # @leds = []
-      # count.times do
-        # led = Led::SevenBit.new
-        # led.extend Led::GRB
-        # @leds << led
-      # end
     end
 
     def init_leds
@@ -22,8 +14,8 @@ class Strip
       end
     end
 
-    def []=(slice,r,g,b)
-      self.leds[slice] = Led::SevenBit.new(g,r,b)
+    def []=(key,r,g,b)
+      self.leds[key] = Led::SevenBit.new(g,r,b)
     end
 
     def flatten

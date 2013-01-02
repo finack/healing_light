@@ -9,8 +9,8 @@ class Strip
       init_leds
     end
 
-    def [](slice)
-      @leds[slice]
+    def [](key)
+      @leds[key]
     end
 
     def init_leds

@@ -34,6 +34,26 @@ command :all do |c|
   end
 end
 
+desc "Chase a light down the strip"
+command :chase do |c|
+  pre do |globals,command,opts,args|
+    $strip = strip globals
+    $strip.extend HealingLight::Control::Chase
+  end
+  c.command :up do |up|
+    up.action { $strip.chase_trailer(255,255,255,dir: :behind) }
+  end
+  c.command :down do |down|
+    down.action { $strip.chase_trailer(255,255,255,dir: :ahead) }
+  end
+  c.command :up_down do |x|
+    x.action do
+      $strip.chase_trailer(128,0,0, dir: :behind)
+      $strip.chase_trailer(0,128,0, dir: :ahead)
+    end
+  end
+end
+
 exit run(ARGV)
 
 # vim ft=ruby
