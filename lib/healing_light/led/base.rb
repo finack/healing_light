@@ -12,6 +12,21 @@ class Led
       self.blue  = b
     end
 
+    def lighten!(opacity)
+      mix_with(255, opacity)
+    end
+
+    def darken!(opacity)
+      mix_with(0, opacity)
+    end
+
+    def mix_with(base, opacity)
+      opacity /= 100.0
+      self.red = ((self.red * opacity) + (base * (1 - opacity))).round
+      self.green = ((self.green * opacity) + (base * (1 - opacity))).round
+      self.blue = ((self.blue * opacity) + (base * (1 - opacity))).round
+    end
+
     def to_a
       [red,green,blue]
     end
