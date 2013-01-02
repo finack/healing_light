@@ -15,7 +15,7 @@ describe HealingLight::Control::Chase do
 
     context "#chase_dot" do
       it "Should chase the light down the strip" do
-        strip.should_receive(:paint).exactly(33).times
+        strip.should_receive(:paint_dot).exactly(34).times
         strip.chase_dot(255,255,255,:delay => 0)
       end
     end

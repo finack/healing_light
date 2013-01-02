@@ -2,7 +2,7 @@ module HealingLight::Control
   module Chase
 
     def chase_dot(r,g,b,opts)
-      count = @count + 1
+      count = @count + 2
       count.times do |pos|
         paint_dot(r,g,b,range(pos,2,opts[:dir]))
         self.publish
